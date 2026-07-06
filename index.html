@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housing Market Intelligence System</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0b0f19;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        /* Continuous Sky background styling with dark night gradient layer */
+        .header-container {
+            background: linear-gradient(180deg, #070a13 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 50px 20px 160px 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border-bottom: 4px solid #38bdf8;
+            overflow: hidden;
+        }
+
+        /* Canvas element alignment setup for firework sky shots */
+        #fireworksCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* City buildings landscape layout element in background */
+        .city-skyline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            opacity: 0.25;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,120 L0,80 L40,80 L40,40 L90,40 L90,80 L130,80 L130,20 L180,20 L180,80 L220,80 L220,60 L270,60 L270,80 L320,80 L320,10 L390,10 L390,80 L440,80 L440,30 L500,30 L500,80 L550,80 L550,50 L610,50 L610,80 L660,80 L660,5 L740,5 L740,80 L790,80 L790,40 L850,40 L850,80 L900,80 L900,25 L960,25 L960,80 L1010,80 L1010,55 L1070,55 L1070,80 L1120,80 L1120,35 L1200,35 L1200,120 Z" fill="%23f43f5e"/></svg>');
+            background-size: cover;
+            background-repeat: repeat-x;
+            z-index: 2;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 42px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.6), 0 0 40px rgba(244, 63, 94, 0.4);
+            font-weight: 900;
+            position: relative;
+            z-index: 3;
+            color: #ffffff;
+        }
+
+        .subtitle {
+            margin: 12px 0 0 0;
+            font-size: 16px;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 3;
+            font-weight: 500;
+        }
+
+        .developed-by-card {
+            margin-top: 30px;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: inline-block;
+            padding: 22px 60px;
+            border-radius: 16px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 3;
+        }
+
+        .dev-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .main-author {
+            font-size: 28px;
+            color: #38bdf8;
+            font-weight: bold;
+            display: block;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .team-title {
+            font-size: 11px;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            display: block;
+            font-weight: bold;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 12px;
+        }
+
+        .team-member {
+            font-size: 16px;
+            color: #cbd5e1;
+            display: block;
+            margin: 5px 0;
+            font-weight: 500;
+        }
+
+        .dashboard-wrapper {
+            margin: -95px auto 30px auto;
+            max-width: 95%;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <canvas id="fireworksCanvas"></canvas>
+        <div class="city-skyline"></div>
+
+        <h1>Housing Market Intelligence System</h1>
+        <p class="subtitle">Interactive Tableau Storyboard Embedded via Python Flask Web UI</p>
+        
+        <div class="developed-by-card">
+            <span class="dev-label">Developed by:</span>
+            <span class="main-author">VISHNU DANDU</span>
+            
+            <span class="team-title">Team Members</span>
+            <span class="team-member">Vishnu Vardhan Dandu</span>
+            <span class="team-member">Guduru Hemanth Varma</span>
+            <span class="team-member">Gurrala Lakshmi Gangadhar</span>
+        </div>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <div class='tableauPlaceholder' id='viz1783266882069' style='position: relative'><noscript><a href='#'><img alt='Story 1 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ho&#47;HousingMarketAnalysisDashboard&#47;Story1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='HousingMarketAnalysisDashboard&#47;Story1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ho&#47;HousingMarketAnalysisDashboard&#47;Story1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1783266882069');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1016px';vizElement.style.height='991px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+        </div>
+
+    <script>
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class FireworkParticle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = Math.random() * 3 + 1;
+                this.friction = 0.95;
+                this.gravity = 0.07;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.015 + 0.01;
+            }
+            update() {
+                this.speed *= this.friction;
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed + this.gravity;
+                this.alpha -= this.decay;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        class FireworkBurst {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * (canvas.height * 0.6) + 30;
+                const colors = ['#ff2a6d', '#05d9e8', '#01012b', '#f5a623', '#b8e986', '#f8e71c', '#e2e8f0'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.particles = [];
+                for(let i=0; i<45; i++) {
+                    this.particles.push(new FireworkParticle(this.x, this.y, this.color));
+                }
+            }
+            update() {
+                this.particles.forEach((p, idx) => {
+                    p.update();
+                    if(p.alpha <= 0) this.particles.splice(idx, 1);
+                });
+            }
+            draw() {
+                this.particles.forEach(p => p.draw());
+            }
+        }
+
+        let bursts = [];
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if(Math.random() < 0.04 && bursts.length < 5) {
+                bursts.push(new FireworkBurst());
+            }
+            bursts.forEach((b, idx) => {
+                b.update();
+                b.draw();
+                if(b.particles.length === 0) bursts.splice(idx, 1);
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
